@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import Text from './components/Text';
+import { ColorContext } from "./Context/ColorContext";
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  state = {
+    colorText: 'blue',
+  }
+
+  changeColor = () => {
+    this.setState ({
+      colorText: this.state.colorText === 'blue' ? 'red' : 'blue',
+    })
+  }
+
+  render() {
+    const { colorText } = this.state;
+     return (
+       <ColorContext.Provider
+        value={{ color: this.state.colorText, changeColor: this.changeColor }}>
+          <div className="App">
+            <p style={{ textDecoration: "underline", textDecorationColor: colorText }}>HOLA MUNDO PADRE!</p>
+            <Text />
+          </div>
+       </ColorContext.Provider>
+    );
+  }
 }
 
 export default App;
